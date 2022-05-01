@@ -69,11 +69,27 @@ This is to prevent the attacker guessing whether an account exists or not. This 
 
 Using [OWASP's Cheatsheet for password strength](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#implement-proper-password-strength-controls) as a guideline in creating our password requirements.
 
-### 8. Encrypted Data
+### 8. Secure Token for Password Reset
+
+We are using a token to be embedded as a parameter of a "forgot password url".
+We ensure that generated tokens are:
+
+    1. Randomly generated using a cryptographically safe algorithm.
+    2. Sufficiently long to protect against brute-force attacks.
+    3. Stored securely.
+    4. Single use and expire after an appropriate period.
+
+### 9. Site-wide Captcha
+
+We're using Google's re-Captcha v3 site-wide to prevent most (we hope all automated) spam and or abuse.
+
+This is especially important for our backend endpoints that are available without authentication and that give JWT as a response (sign in, sign up) and or endpoints that are using 3rd party services and are "easily abusable" such as email sending (forgot password endpoint).
+
+### 10. Encrypted Data
 
 We are using bcrypt with auto-generated salt to encrypt users' passwords and some other private data before storing it in our database.
 
-### 9. JWT Storage
+### 11. JWT Storage
 
 We're using JWT as an authentication method.
 
@@ -81,22 +97,22 @@ We store our JWT as an `httpOnly` cookie (as opposed to be stored in `localStora
 
 Read more about httpOnly cookie: [OWASP article](https://owasp.org/www-community/HttpOnly).
 
-### 10. JWT Expiration (Age)
+### 12. JWT Expiration (Age)
 
 **Per the best-practice, our JWT lives shortly.** This means, if for whatever reason our JWT gets stolen, the malicious party won't have much time until the token expires. This is in hopes to minimise the harm that can be done if a token gets stolen.
 
-### 11. SQL Injection
+### 13. SQL Injection
 
 We're using strapi to send queries to our database. Strapi uses bookshelf.js ORM that doesn't use raw SQL queries, and neither do we.
 
 We however trust the ORM to do its job (not using raw sql queries), and the layer behind it (knex.js) to escape all character inputs correctly.
 
-### 12. Database Security
+### 14. Database Security
 
 Only allowing requests to be made from whitelisted addresses using database user accounts.For our case, we whitelisted our backend's address and chose a database user to be used from our backend.
 
 This way, only our backend is able to communicate with the DB and not anyone else. Data is also encrypted in transit and at rest.
 
-### 13. External Dependencies With Known Vulnerabilities
+### 15. External Dependencies With Known Vulnerabilities
 
 We are utilising Dependabot to automatically notifies us and creates a PR for dependency updates when any of our dependency that we are using have known vulnerability(ies).
