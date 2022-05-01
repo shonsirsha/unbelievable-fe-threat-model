@@ -1,0 +1,1674 @@
+{
+	"summary": {
+		"title": "Unbelievable.id Threat Model",
+		"owner": "Sean Liesanggoro"
+	},
+	"detail": {
+		"contributors": [],
+		"diagrams": [
+			{
+				"cells": [
+					{
+						"position": {
+							"x": 113,
+							"y": 260
+						},
+						"size": {
+							"width": 100,
+							"height": 100
+						},
+						"attrs": {
+							"text": {
+								"text": "Digital Ocean\nApp Platform \n(Frontend)"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": null
+							}
+						},
+						"shape": "process",
+						"zIndex": 1,
+						"id": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd",
+						"data": {
+							"name": "Digital Ocean\nApp Platform \n(Frontend)",
+							"description": "",
+							"type": "tm.Process",
+							"isTrustBoundary": false,
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"threats": [],
+							"hasOpenThreats": false
+						}
+					},
+					{
+						"position": {
+							"x": 60,
+							"y": -10
+						},
+						"size": {
+							"width": 160,
+							"height": 80
+						},
+						"attrs": {
+							"text": {
+								"text": "Browser"
+							},
+							"body": {
+								"stroke": "red",
+								"strokeWidth": 3,
+								"strokeDasharray": null
+							}
+						},
+						"shape": "actor",
+						"zIndex": 2,
+						"id": "ca1a0390-cdc8-4b41-8be2-0fcc13ee6c6d",
+						"data": {
+							"name": "Browser",
+							"description": "",
+							"type": "tm.Actor",
+							"isTrustBoundary": false,
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"threats": [
+								{
+									"status": "Mitigated",
+									"severity": "High",
+									"title": "XSS Attacks",
+									"type": "Elevation of privilege",
+									"description": "",
+									"mitigation": "Our app is using NextJS (react) and it automatically defends itself from different forms of XSS attacks. We also did not use react's `dangerouslySetInnerHTML` which may expose us to XSS vulnerability if not used correctly.\n\nMoreover, our app employs a reasonably strict CSP (content security policy).",
+									"modelType": "STRIDE",
+									"id": "ae8e5ab2-dc3d-4430-93f1-0287468694be"
+								},
+								{
+									"id": "89a2e2b7-0c38-4bb0-97b2-85d0f83fcade",
+									"status": "Open",
+									"severity": "High",
+									"title": "CSRF Attacks",
+									"type": "Spoofing",
+									"description": "Any client could forge requests to our API (backend).",
+									"mitigation": "Backend should enforce CORS headers to only allow frontend's domain.",
+									"modelType": "STRIDE"
+								}
+							],
+							"hasOpenThreats": true,
+							"providesAuthentication": false
+						}
+					},
+					{
+						"position": {
+							"x": 480,
+							"y": 225
+						},
+						"size": {
+							"width": 170,
+							"height": 170
+						},
+						"attrs": {
+							"text": {
+								"text": "Digital Ocean\nApp Platform \n(Strapi CMS /\n \"Backend\")"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": null
+							}
+						},
+						"shape": "process",
+						"zIndex": 8,
+						"id": "34203083-a11b-4677-90d6-17a05c6afa50",
+						"data": {
+							"name": "Digital Ocean\nApp Platform \n(Strapi CMS /\n \"Backend\")",
+							"description": "This is a headless CMS which consists of two components. One is the UI (react), and another is the \"headless\" part, that is the REST API for interacting with our (frontend) applications.",
+							"type": "tm.Process",
+							"isTrustBoundary": false,
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"threats": [
+								{
+									"id": "bdc2a7c1-20c7-42c8-a769-a796171d7892",
+									"status": "Mitigated",
+									"severity": "High",
+									"title": "External Dependencies With Known Vulnerabilities",
+									"type": "Tampering",
+									"description": "As we are using some external dependencies such as Strapi, which also depends on many different external dependencies, it's entirely possible that any of these dependencies (frameworks / libraries / any piece of code) to be vulnerable.\n\nIf a vulnerable piece of code gets exploited, it may result in data loss, and or application take-over which is very serious.",
+									"mitigation": "We are utilising Dependabot to automatically notifies us and creates a PR for dependency updates when any of our dependency that we are using have known vulnerability(ies).",
+									"modelType": "STRIDE"
+								}
+							],
+							"hasOpenThreats": false
+						}
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Request",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "e7381f3e-16df-4d08-ad43-06f43fe68b88",
+						"labels": ["Request"],
+						"source": {
+							"x": 160,
+							"y": 370
+						},
+						"target": {
+							"cell": "e394076e-6bd0-4c01-bfb2-d229e2e944f2"
+						},
+						"vertices": [
+							{
+								"x": 190,
+								"y": 460
+							},
+							{
+								"x": 220,
+								"y": 490
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Video Uploads",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "129fc15f-da3c-42fb-af54-b0557fb7039c",
+						"labels": ["Video Uploads"],
+						"source": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"target": {
+							"cell": "e394076e-6bd0-4c01-bfb2-d229e2e944f2"
+						},
+						"vertices": [
+							{
+								"x": 482.5,
+								"y": 400
+							},
+							{
+								"x": 410,
+								"y": 480
+							},
+							{
+								"x": 340,
+								"y": 500
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Queried Data",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "1333264f-a6a4-49b3-bada-c37272799ce0",
+						"labels": ["Queried Data"],
+						"source": {
+							"cell": "428ef173-0036-4bd9-9f3c-4002ff1a0dc0"
+						},
+						"target": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"vertices": [
+							{
+								"x": 620,
+								"y": 150
+							},
+							{
+								"x": 600,
+								"y": 200
+							},
+							{
+								"x": 640,
+								"y": 220
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Request",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "b75fde8b-5e8c-4a2a-b5ea-122fbf95271b",
+						"labels": ["Request"],
+						"source": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"target": {
+							"cell": "0d662b1b-710e-472c-aa67-04f07d72bcfc"
+						},
+						"vertices": [
+							{
+								"x": 450,
+								"y": 110
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Response",
+							"description": " (Invoice URL)",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "1184f462-9487-428f-bb61-b53cdf9a12fa",
+						"labels": ["Response"],
+						"source": {
+							"cell": "0d662b1b-710e-472c-aa67-04f07d72bcfc"
+						},
+						"target": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"vertices": [
+							{
+								"x": 369,
+								"y": 190
+							}
+						]
+					},
+					{
+						"shape": "trust-broundary-curve",
+						"attrs": {
+							"line": {
+								"targetMarker": "",
+								"sourceMarker": ""
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"labels": [""],
+						"data": {
+							"type": "tm.Boundary",
+							"name": "",
+							"description": "",
+							"isTrustBoundary": true,
+							"hasOpenThreats": false
+						},
+						"id": "8587248c-5deb-4bd2-9311-a9104e1c1e41",
+						"source": {
+							"x": 50,
+							"y": 230
+						},
+						"target": {
+							"x": 270,
+							"y": 390
+						},
+						"vertices": [
+							{
+								"x": 140,
+								"y": 210
+							},
+							{
+								"x": 210,
+								"y": 210
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Response",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "ad9c7dd5-8b41-4b8c-b8c0-14b2f12184eb",
+						"labels": ["Response"],
+						"source": {
+							"cell": "ff6e93d4-c19f-4e0c-9db8-c782b0b40b3d"
+						},
+						"target": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"vertices": [
+							{
+								"x": 520,
+								"y": 740
+							},
+							{
+								"x": 550,
+								"y": 630
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Image uploads",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "28c7fbb4-6d77-4dad-8aeb-099bff0d47f1",
+						"labels": ["Image uploads"],
+						"source": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"target": {
+							"cell": "ff6e93d4-c19f-4e0c-9db8-c782b0b40b3d"
+						},
+						"vertices": [
+							{
+								"x": 670,
+								"y": 510
+							},
+							{
+								"x": 710,
+								"y": 689.5
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Some user data",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "bb460d60-ee36-4338-a5fc-041e2f592f99",
+						"labels": ["Some user data"],
+						"source": {
+							"x": 650,
+							"y": 335
+						},
+						"target": {
+							"cell": "815b1130-8aac-4494-be4c-605233bf2525"
+						},
+						"vertices": [
+							{
+								"x": 760,
+								"y": 370
+							},
+							{
+								"x": 790,
+								"y": 370
+							}
+						]
+					},
+					{
+						"shape": "trust-broundary-curve",
+						"attrs": {
+							"line": {
+								"targetMarker": "",
+								"sourceMarker": ""
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"labels": [
+							{
+								"attrs": {
+									"text": {
+										"text": ""
+									}
+								}
+							}
+						],
+						"data": {
+							"type": "tm.Boundary",
+							"name": "",
+							"description": "",
+							"isTrustBoundary": true,
+							"hasOpenThreats": false
+						},
+						"id": "74623ae9-7411-4b27-8766-ecc67f5b6a05",
+						"source": {
+							"x": 870,
+							"y": 280
+						},
+						"target": {
+							"x": 900,
+							"y": 420
+						},
+						"vertices": [
+							{
+								"x": 800,
+								"y": 340
+							},
+							{
+								"x": 840,
+								"y": 390
+							},
+							{
+								"x": 870,
+								"y": 420
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Response",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "d6959f19-e2ac-4d08-85ca-115f7687b11e",
+						"labels": ["Response"],
+						"source": {
+							"cell": "815b1130-8aac-4494-be4c-605233bf2525"
+						},
+						"target": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"vertices": [
+							{
+								"x": 810,
+								"y": 290
+							},
+							{
+								"x": 770,
+								"y": 250
+							},
+							{
+								"x": 720,
+								"y": 250
+							}
+						]
+					},
+					{
+						"shape": "trust-broundary-curve",
+						"attrs": {
+							"line": {
+								"targetMarker": "",
+								"sourceMarker": ""
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"labels": [""],
+						"data": {
+							"type": "tm.Boundary",
+							"name": "",
+							"description": "",
+							"isTrustBoundary": true,
+							"hasOpenThreats": false
+						},
+						"id": "cb851921-b062-4346-9b36-c09642be8f20",
+						"source": {
+							"x": 420,
+							"y": 160
+						},
+						"target": {
+							"x": 680,
+							"y": 410
+						},
+						"vertices": [
+							{
+								"x": 340,
+								"y": 310
+							},
+							{
+								"x": 430,
+								"y": 370
+							},
+							{
+								"x": 490,
+								"y": 390
+							},
+							{
+								"x": 570,
+								"y": 450
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Video File Streaming",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "c2eadccc-382b-46ca-b980-d35ff1d7d541",
+						"labels": ["Video File Streaming"],
+						"source": {
+							"cell": "e394076e-6bd0-4c01-bfb2-d229e2e944f2"
+						},
+						"target": {
+							"x": 200,
+							"y": 360
+						},
+						"vertices": [
+							{
+								"x": 250,
+								"y": 470
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Login Request",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "61c98ae6-982b-45cb-afbc-d77c26ae0ad0",
+						"labels": ["Login Request"],
+						"source": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"target": {
+							"cell": "b4e02435-826d-4408-a55a-b7c4e07ae9db"
+						},
+						"vertices": [
+							{
+								"x": 840,
+								"y": 720
+							},
+							{
+								"x": 800,
+								"y": 790
+							}
+						]
+					},
+					{
+						"shape": "trust-broundary-curve",
+						"attrs": {
+							"line": {
+								"targetMarker": "",
+								"sourceMarker": ""
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"labels": [""],
+						"data": {
+							"type": "tm.Boundary",
+							"name": "",
+							"description": "",
+							"isTrustBoundary": true,
+							"hasOpenThreats": false
+						},
+						"id": "9ddd52a6-5720-4364-a23a-9271ceae7579",
+						"source": {
+							"x": 40,
+							"y": 360
+						},
+						"target": {
+							"x": 270,
+							"y": 390
+						}
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Login Redirect",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "c4db2c75-43ef-4ca3-bcd3-47903075fc59",
+						"labels": ["Login Redirect"],
+						"source": {
+							"x": 540,
+							"y": 820
+						},
+						"target": {
+							"cell": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd"
+						},
+						"vertices": [
+							{
+								"x": 270,
+								"y": 730
+							},
+							{
+								"x": 150,
+								"y": 700
+							},
+							{
+								"x": 30,
+								"y": 630
+							},
+							{
+								"x": 60,
+								"y": 380
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Request",
+							"description": "Request to get invoice page (html)",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "71ffdb1a-cdb9-43a1-aa84-acef4cd9269e",
+						"labels": ["Request"],
+						"source": {
+							"x": 180,
+							"y": 260
+						},
+						"target": {
+							"cell": "0d662b1b-710e-472c-aa67-04f07d72bcfc"
+						},
+						"vertices": [
+							{
+								"x": 270,
+								"y": 140
+							},
+							{
+								"x": 280,
+								"y": 130
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "API Responses",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "69ca2890-71b7-4105-b621-33915e84924a",
+						"labels": ["API Responses"],
+						"source": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"target": {
+							"cell": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd"
+						},
+						"vertices": [
+							{
+								"x": 290,
+								"y": 340
+							},
+							{
+								"x": 240,
+								"y": 340
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "API Requests",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": [
+								{
+									"id": "c1085c51-45ed-48e7-a6c3-57977b60f131",
+									"status": "",
+									"severity": "",
+									"title": "API Request Abuse",
+									"type": "Denial of service",
+									"description": "Our API may be \"abused\" (spammed or flooded) by any external actors (bots or any other malicious actors).",
+									"mitigation": "We are using CloudFlare's DDOS protection https://www.cloudflare.com/en-gb/ddos to mitigate this. This way, all of the traffic that goes to our app is filtered by CloudFlare's service, and any spam traffic from any (malicious) actor will be stopped. \n\nFurthermore, we employ a rate-limit policy to our clients based on their IP addresses when calling our API.",
+									"modelType": "STRIDE"
+								}
+							]
+						},
+						"id": "197c0f8e-f511-47f7-afac-6b6d18803265",
+						"labels": ["API Requests"],
+						"source": {
+							"x": 213,
+							"y": 300
+						},
+						"target": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"vertices": [
+							{
+								"x": 360,
+								"y": 270
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Responses",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "fa89acc5-b84e-4c45-a4d9-b2332867a317",
+						"labels": ["Responses"],
+						"source": {
+							"cell": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd"
+						},
+						"target": {
+							"cell": "ca1a0390-cdc8-4b41-8be2-0fcc13ee6c6d"
+						},
+						"vertices": [
+							{
+								"x": 180,
+								"y": 160
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "HTML Response",
+							"description": "Response is an invoice page (html)",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": [
+								{
+									"id": "c505313d-20a8-4c97-b1eb-beaef8538d19",
+									"status": "NotApplicable",
+									"severity": "High",
+									"title": "XSS Attacks",
+									"type": "Elevation of privilege",
+									"description": "This response contains HTML (invoice) page that will be displayed in an iFrame in our web app. This possesses an XSS attacks risk. We however do trust Xendit not to put in malicious piece of software here that would otherwise equate to an XSS attack to our app.",
+									"mitigation": "",
+									"modelType": "STRIDE"
+								}
+							]
+						},
+						"id": "31df25f7-fb2e-4623-9a86-2e15d6182c2d",
+						"labels": ["HTML Response"],
+						"source": {
+							"cell": "0d662b1b-710e-472c-aa67-04f07d72bcfc"
+						},
+						"target": {
+							"cell": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd"
+						},
+						"vertices": [
+							{
+								"x": 326,
+								"y": 130
+							},
+							{
+								"x": 280,
+								"y": 180
+							},
+							{
+								"x": 280,
+								"y": 220
+							},
+							{
+								"x": 250,
+								"y": 260
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Response",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "0de3b25c-3fed-4811-986d-fb949583252c",
+						"labels": ["Response"],
+						"source": {
+							"cell": "ff6e93d4-c19f-4e0c-9db8-c782b0b40b3d"
+						},
+						"target": {
+							"cell": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd"
+						},
+						"vertices": [
+							{
+								"x": 160,
+								"y": 650
+							},
+							{
+								"x": 80,
+								"y": 550
+							},
+							{
+								"x": 80,
+								"y": 400
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Uploaded Videos'\nDetail / Metadata",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "86680c62-088e-4998-97a5-aedea8e88e66",
+						"labels": ["Uploaded Videos'\nDetail / Metadata"],
+						"source": {
+							"cell": "e394076e-6bd0-4c01-bfb2-d229e2e944f2"
+						},
+						"target": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"vertices": [
+							{
+								"x": 340,
+								"y": 450
+							},
+							{
+								"x": 360,
+								"y": 420
+							},
+							{
+								"x": 410,
+								"y": 380
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Browser Requests",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": [
+								{
+									"id": "981da5fe-48f0-44af-a0f9-2243cf77b7e6",
+									"status": "Mitigated",
+									"severity": "High",
+									"title": "Downgrade Attack",
+									"type": "Tampering",
+									"description": "",
+									"mitigation": "Our app employs HTTP Strict Transport Security (HSTS) headers to force https on each request. This way, our app can only be accessed via a secure protocol that is HTTPS.\n\n",
+									"modelType": "STRIDE"
+								}
+							]
+						},
+						"id": "9fcb1b00-b928-46e8-baa2-c5dbff632a3f",
+						"labels": ["Browser Requests"],
+						"source": {
+							"cell": "ca1a0390-cdc8-4b41-8be2-0fcc13ee6c6d"
+						},
+						"target": {
+							"cell": "a81c8265-55c9-4b22-80c7-52abc1b3ccfd"
+						},
+						"vertices": [
+							{
+								"x": 80,
+								"y": 190
+							},
+							{
+								"x": 80,
+								"y": 230
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Queries",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": [
+								{
+									"id": "0835ac05-0902-4db5-bc4a-145cae14fb05",
+									"status": "",
+									"severity": "",
+									"title": "SQL Injections",
+									"type": "Elevation of privilege",
+									"description": "",
+									"mitigation": "We don't use raw SQL statements, and Strapi (our CMS where Queries are made from) is using Bookshelf.JS ORM that also prevents SQL injection. It's done by automatically escaping all character inputs before sending it to the DB as a query.",
+									"modelType": "STRIDE"
+								}
+							]
+						},
+						"id": "48b76d54-f6ff-4c73-85e0-9e655a1c5f81",
+						"labels": ["Queries"],
+						"source": {
+							"cell": "34203083-a11b-4677-90d6-17a05c6afa50"
+						},
+						"target": {
+							"cell": "428ef173-0036-4bd9-9f3c-4002ff1a0dc0"
+						},
+						"vertices": [
+							{
+								"x": 550,
+								"y": 180
+							},
+							{
+								"x": 570,
+								"y": 140
+							}
+						]
+					},
+					{
+						"shape": "flow",
+						"attrs": {
+							"line": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"targetMarker": {
+									"name": "classic"
+								},
+								"strokeDasharray": null
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"data": {
+							"type": "tm.Flow",
+							"name": "Request\n",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"protocol": "",
+							"isEncrypted": false,
+							"isPublicNetwork": false,
+							"hasOpenThreats": false,
+							"threats": []
+						},
+						"id": "4f9d1182-e4e6-434b-b2d4-808f69ffafea",
+						"labels": ["Request\n"],
+						"source": {
+							"x": 190,
+							"y": 348
+						},
+						"target": {
+							"cell": "ff6e93d4-c19f-4e0c-9db8-c782b0b40b3d"
+						},
+						"vertices": [
+							{
+								"x": 500,
+								"y": 450
+							}
+						]
+					},
+					{
+						"shape": "trust-broundary-curve",
+						"attrs": {
+							"line": {
+								"targetMarker": "",
+								"sourceMarker": ""
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"labels": [""],
+						"data": {
+							"type": "tm.Boundary",
+							"name": "",
+							"description": "",
+							"isTrustBoundary": true,
+							"hasOpenThreats": false
+						},
+						"id": "3a336afc-d07d-42b5-8a1f-7936d242b4e5",
+						"source": {
+							"x": 420,
+							"y": 160
+						},
+						"target": {
+							"x": 790,
+							"y": 130
+						},
+						"tools": {
+							"items": [
+								"boundary",
+								"button-remove",
+								"vertices",
+								"source-arrowhead",
+								"target-arrowhead"
+							],
+							"name": null
+						}
+					},
+					{
+						"position": {
+							"x": 650,
+							"y": 30
+						},
+						"size": {
+							"width": 120,
+							"height": 60
+						},
+						"attrs": {
+							"text": {
+								"text": "Managed Postgres DB"
+							},
+							"topLine": {
+								"strokeWidth": 1,
+								"strokeDasharray": null
+							},
+							"bottomLine": {
+								"strokeWidth": 1,
+								"strokeDasharray": null
+							}
+						},
+						"shape": "store",
+						"id": "428ef173-0036-4bd9-9f3c-4002ff1a0dc0",
+						"zIndex": 11,
+						"data": {
+							"type": "tm.Store",
+							"name": "Managed Postgres DB",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"isALog": false,
+							"storesCredentials": false,
+							"isEncrypted": false,
+							"isSigned": false,
+							"hasOpenThreats": false,
+							"threats": [
+								{
+									"id": "351ab48d-093c-48d9-862c-c9425d76ee8b",
+									"status": "Mitigated",
+									"severity": "High",
+									"title": "Unauthorised Access",
+									"type": "Elevation of privilege",
+									"description": "Database is open to public, causing non-authorised user(s) to be able to run queries to the database.",
+									"mitigation": "Only allowing requests to be made from whitelisted addresses using database user accounts.For our case, we whitelisted our backend's address and chose a database user to be used from our backend. This way, only our backend is able to communicate with the DB and not anyone else.",
+									"modelType": "STRIDE"
+								}
+							]
+						}
+					},
+					{
+						"position": {
+							"x": 350,
+							"y": -30
+						},
+						"size": {
+							"width": 80,
+							"height": 80
+						},
+						"attrs": {
+							"text": {
+								"text": "Xendit"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": "5 2"
+							}
+						},
+						"shape": "process",
+						"zIndex": 12,
+						"id": "0d662b1b-710e-472c-aa67-04f07d72bcfc",
+						"data": {
+							"type": "tm.Process",
+							"name": "Xendit",
+							"description": "",
+							"outOfScope": true,
+							"reasonOutOfScope": "",
+							"privilegeLevel": "",
+							"hasOpenThreats": false,
+							"threats": []
+						}
+					},
+					{
+						"position": {
+							"x": 840,
+							"y": 315
+						},
+						"size": {
+							"width": 80,
+							"height": 80
+						},
+						"attrs": {
+							"text": {
+								"text": "Mailchimp\n"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": null
+							}
+						},
+						"shape": "process",
+						"zIndex": 13,
+						"id": "815b1130-8aac-4494-be4c-605233bf2525",
+						"data": {
+							"type": "tm.Process",
+							"name": "Mailchimp\n",
+							"description": "",
+							"outOfScope": false,
+							"reasonOutOfScope": "",
+							"privilegeLevel": "",
+							"hasOpenThreats": false,
+							"threats": []
+						}
+					},
+					{
+						"position": {
+							"x": 300,
+							"y": 640
+						},
+						"size": {
+							"width": 90,
+							"height": 90
+						},
+						"attrs": {
+							"text": {
+								"text": "AWS S3\nStorage"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": "5 2"
+							}
+						},
+						"shape": "process",
+						"zIndex": 14,
+						"id": "ff6e93d4-c19f-4e0c-9db8-c782b0b40b3d",
+						"data": {
+							"type": "tm.Process",
+							"name": "AWS S3\nStorage",
+							"description": "",
+							"outOfScope": true,
+							"reasonOutOfScope": "",
+							"privilegeLevel": "",
+							"hasOpenThreats": false,
+							"threats": []
+						}
+					},
+					{
+						"position": {
+							"x": 240,
+							"y": 550
+						},
+						"size": {
+							"width": 70,
+							"height": 70
+						},
+						"attrs": {
+							"text": {
+								"text": "Bunny"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": "5 2"
+							}
+						},
+						"shape": "process",
+						"zIndex": 15,
+						"id": "e394076e-6bd0-4c01-bfb2-d229e2e944f2",
+						"data": {
+							"type": "tm.Process",
+							"name": "Bunny",
+							"description": "CDN + Video Storage\nto stream videos from (SAAS)",
+							"outOfScope": true,
+							"reasonOutOfScope": "We trust bunny.net in transcoding, storing, and maintaining security aspects for our videos",
+							"privilegeLevel": "",
+							"hasOpenThreats": false,
+							"threats": []
+						}
+					},
+					{
+						"position": {
+							"x": 540,
+							"y": 770
+						},
+						"size": {
+							"width": 80,
+							"height": 80
+						},
+						"attrs": {
+							"text": {
+								"text": "GCP Oauth"
+							},
+							"body": {
+								"stroke": "#333333",
+								"strokeWidth": 1,
+								"strokeDasharray": "5 2"
+							}
+						},
+						"shape": "process",
+						"zIndex": 16,
+						"id": "b4e02435-826d-4408-a55a-b7c4e07ae9db",
+						"data": {
+							"type": "tm.Process",
+							"name": "GCP Oauth",
+							"description": "",
+							"outOfScope": true,
+							"reasonOutOfScope": "",
+							"privilegeLevel": "",
+							"hasOpenThreats": false,
+							"threats": []
+						}
+					}
+				],
+				"version": "2.0",
+				"title": "Threat Model",
+				"thumbnail": "./public/content/images/thumbnail.jpg",
+				"id": 0
+			}
+		]
+	},
+	"version": "2.0"
+}
