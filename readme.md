@@ -10,10 +10,16 @@ To open the threat model:
 4. Click on the import button.
 5. Click on the "Threat Model" diagram to see the interactive diagram (containing open and mitigated threats).
 
+Threat model diagram:
+
+![Threat model](Diagram.png "Threat model")
+
+Please follow the numbered steps above to see the interactive diagram (containing open and mitigated threats).
+
 ## Relevant Repositories
 
-1. https://github.com/shonsirsha/unbelievable-frontend Frontend (https://unbelievable.id)
-2. https://github.com/shonsirsha/unbelievable-backend Backend / CMS (https://services.unbelievable.id/admin)
+1. https://github.com/shonsirsha/unbelievable-frontend Frontend, private repository.Live URL: https://unbelievable.id
+2. https://github.com/shonsirsha/unbelievable-backend Backend / CMS, private repository. Live URL: https://services.unbelievable.id/admin
 
 ## Cyber security measures already implemented
 

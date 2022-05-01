@@ -1364,6 +1364,36 @@
 						]
 					},
 					{
+						"shape": "trust-broundary-curve",
+						"attrs": {
+							"line": {
+								"targetMarker": "",
+								"sourceMarker": ""
+							}
+						},
+						"width": 200,
+						"height": 100,
+						"zIndex": 10,
+						"connector": "smooth",
+						"labels": [""],
+						"data": {
+							"type": "tm.Boundary",
+							"name": "",
+							"description": "",
+							"isTrustBoundary": true,
+							"hasOpenThreats": false
+						},
+						"id": "3a336afc-d07d-42b5-8a1f-7936d242b4e5",
+						"source": {
+							"x": 420,
+							"y": 160
+						},
+						"target": {
+							"x": 790,
+							"y": 130
+						}
+					},
+					{
 						"shape": "flow",
 						"attrs": {
 							"line": {
@@ -1406,46 +1436,6 @@
 								"y": 450
 							}
 						]
-					},
-					{
-						"shape": "trust-broundary-curve",
-						"attrs": {
-							"line": {
-								"targetMarker": "",
-								"sourceMarker": ""
-							}
-						},
-						"width": 200,
-						"height": 100,
-						"zIndex": 10,
-						"connector": "smooth",
-						"labels": [""],
-						"data": {
-							"type": "tm.Boundary",
-							"name": "",
-							"description": "",
-							"isTrustBoundary": true,
-							"hasOpenThreats": false
-						},
-						"id": "3a336afc-d07d-42b5-8a1f-7936d242b4e5",
-						"source": {
-							"x": 420,
-							"y": 160
-						},
-						"target": {
-							"x": 790,
-							"y": 130
-						},
-						"tools": {
-							"items": [
-								"boundary",
-								"button-remove",
-								"vertices",
-								"source-arrowhead",
-								"target-arrowhead"
-							],
-							"name": null
-						}
 					},
 					{
 						"position": {
@@ -1546,7 +1536,7 @@
 							"body": {
 								"stroke": "#333333",
 								"strokeWidth": 1,
-								"strokeDasharray": null
+								"strokeDasharray": "5 2"
 							}
 						},
 						"shape": "process",
@@ -1556,7 +1546,7 @@
 							"type": "tm.Process",
 							"name": "Mailchimp\n",
 							"description": "",
-							"outOfScope": false,
+							"outOfScope": true,
 							"reasonOutOfScope": "",
 							"privilegeLevel": "",
 							"hasOpenThreats": false,
