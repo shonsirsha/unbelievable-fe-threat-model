@@ -93,7 +93,9 @@ We are using bcrypt with auto-generated salt to encrypt users' passwords and som
 
 We're using JWT as an authentication method.
 
-We store our JWT as an `httpOnly` cookie (as opposed to be stored in `localStorage` or "normal" cookie). This makes the JWT inaccessible from the client, and so if attacks such as an XSS attack ever occurs, it's impossible to steal our token from the client (browser).
+We store our JWT as an `httpOnly` cookie (as opposed to be stored in `localStorage` or as a "normal" cookie). This makes the JWT inaccessible from the client.
+
+If, for whatever reason, an attack such as an XSS attack ever occurs, our token won't get stolen from the attack as it's impossible for the client to access an `httpOnly` cookie.
 
 Read more about httpOnly cookie: [OWASP article](https://owasp.org/www-community/HttpOnly).
 
